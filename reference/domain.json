@@ -1,0 +1,16 @@
+{
+  "domain": "grain-aeration",
+  "warehouse": {"id": "WH-07", "grain": "稻谷", "depth_m": 5.5},
+  "sensors": [
+    {"id": "T-TOP-1", "depth_m": 0.5, "temperature_c": 24.8, "humidity_pct": 78, "quality": "good"},
+    {"id": "T-MID-1", "depth_m": 2.5, "temperature_c": 29.1, "humidity_pct": 66, "quality": "drifting"}
+  ],
+  "fans": [
+    {"id": "F-1", "interlock_group": "DUCT-N", "rated_kw": 18.5},
+    {"id": "F-2", "interlock_group": "DUCT-N", "rated_kw": 18.5}
+  ],
+  "outside_weather": [
+    {"at": "2026-09-11T22:00:00+08:00", "temperature_c": 19.2, "humidity_pct": 91, "rain": true}
+  ],
+  "restrictions": [{"kind": "fumigation", "starts_at": "2026-09-11T18:00:00+08:00", "ends_at": "2026-09-12T06:00:00+08:00"}]
+}
