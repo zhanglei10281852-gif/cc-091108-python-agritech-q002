@@ -1,7 +1,11 @@
 [project]
 name = "grain-aeration-domain"
 version = "0.1.0"
+description = "粮仓机械通风控制中枢：露点安全、传感器隔离、安全否决、审批联锁与审计回放"
 requires-python = ">=3.11"
 
 [tool.ruff]
 line-length = 100
+
+[tool.setuptools]
+packages = ["grain_aeration"]

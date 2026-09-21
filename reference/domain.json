@@ -1,16 +1,58 @@
 {
   "domain": "grain-aeration",
-  "warehouse": {"id": "WH-07", "grain": "稻谷", "depth_m": 5.5},
+  "warehouse": {
+    "id": "WH-07",
+    "grain": "稻谷",
+    "depth_m": 5.5,
+    "plan_m": 30.0,
+    "width_m": 18.0
+  },
+  "cables": [
+    {"id": "C-1", "x_m": 6.0, "y_m": 5.0, "note": "北侧测温电缆，靠近 DUCT-N 风道"},
+    {"id": "C-2", "x_m": 15.0, "y_m": 9.0, "note": "仓中测温电缆"},
+    {"id": "C-3", "x_m": 24.0, "y_m": 13.0, "note": "南侧测温电缆"}
+  ],
   "sensors": [
-    {"id": "T-TOP-1", "depth_m": 0.5, "temperature_c": 24.8, "humidity_pct": 78, "quality": "good"},
-    {"id": "T-MID-1", "depth_m": 2.5, "temperature_c": 29.1, "humidity_pct": 66, "quality": "drifting"}
+    {"id": "T-TOP-1", "cable_id": "C-1", "cable_index": 0, "depth_m": 0.5, "layer": "top",    "temperature_c": 24.8, "humidity_pct": 78, "quality": "good"},
+    {"id": "T-MID-1", "cable_id": "C-1", "cable_index": 1, "depth_m": 2.5, "layer": "middle", "temperature_c": 29.1, "humidity_pct": 66, "quality": "drifting"},
+    {"id": "T-BOT-1", "cable_id": "C-1", "cable_index": 2, "depth_m": 5.0, "layer": "bottom", "temperature_c": 16.2, "humidity_pct": 72, "quality": "good"},
+    {"id": "T-TOP-2", "cable_id": "C-2", "cable_index": 0, "depth_m": 0.5, "layer": "top",    "temperature_c": 25.3, "humidity_pct": 76, "quality": "good"},
+    {"id": "T-MID-2", "cable_id": "C-2", "cable_index": 1, "depth_m": 2.5, "layer": "middle", "temperature_c": 28.6, "humidity_pct": 65, "quality": "good"},
+    {"id": "T-BOT-2", "cable_id": "C-2", "cable_index": 2, "depth_m": 5.0, "layer": "bottom", "temperature_c": 15.8, "humidity_pct": 71, "quality": "good"},
+    {"id": "T-TOP-3", "cable_id": "C-3", "cable_index": 0, "depth_m": 0.5, "layer": "top",    "temperature_c": 24.6, "humidity_pct": 79, "quality": "good"},
+    {"id": "T-MID-3", "cable_id": "C-3", "cable_index": 1, "depth_m": 2.5, "layer": "middle", "temperature_c": 28.9, "humidity_pct": 67, "quality": "good"},
+    {"id": "T-BOT-3", "cable_id": "C-3", "cable_index": 2, "depth_m": 5.0, "layer": "bottom", "temperature_c": 16.0, "humidity_pct": 73, "quality": "good"}
+  ],
+  "ducts": [
+    {"id": "DUCT-N", "reference_range_pa": [-1200.0, -100.0], "note": "北侧主风道，F-1/F-2 共用，同组互锁"}
   ],
   "fans": [
-    {"id": "F-1", "interlock_group": "DUCT-N", "rated_kw": 18.5},
-    {"id": "F-2", "interlock_group": "DUCT-N", "rated_kw": 18.5}
+    {"id": "F-1", "interlock_group": "DUCT-N", "duct_id": "DUCT-N", "rated_kw": 18.5},
+    {"id": "F-2", "interlock_group": "DUCT-N", "duct_id": "DUCT-N", "rated_kw": 18.5}
+  ],
+  "duct_pressures": [
+    {"duct_id": "DUCT-N", "at": "2026-09-11T21:30:00+08:00", "static_pressure_pa": -560.0, "note": "白班末了正常"},
+    {"duct_id": "DUCT-N", "at": "2026-09-11T22:00:00+08:00", "static_pressure_pa": -1480.0, "note": "降雨后风阻异常偏大，疑似风口倒灌/滤风面受潮"}
   ],
   "outside_weather": [
-    {"at": "2026-09-11T22:00:00+08:00", "temperature_c": 19.2, "humidity_pct": 91, "rain": true}
+    {"at": "2026-09-11T20:00:00+08:00", "temperature_c": 22.6, "humidity_pct": 74, "rain": false, "wind_speed_mps": 1.4},
+    {"at": "2026-09-11T21:00:00+08:00", "temperature_c": 21.1, "humidity_pct": 83, "rain": false, "wind_speed_mps": 1.8},
+    {"at": "2026-09-11T22:00:00+08:00", "temperature_c": 19.2, "humidity_pct": 91, "rain": true,  "wind_speed_mps": 2.6},
+    {"at": "2026-09-11T23:30:00+08:00", "temperature_c": 17.8, "humidity_pct": 96, "rain": true,  "wind_speed_mps": 2.2}
   ],
-  "restrictions": [{"kind": "fumigation", "starts_at": "2026-09-11T18:00:00+08:00", "ends_at": "2026-09-12T06:00:00+08:00"}]
+  "tariff": {
+    "currency": "CNY",
+    "slots": [
+      {"tier": "peak",   "start": "08:00", "end": "11:00", "price_cny_per_kwh": 1.05},
+      {"tier": "peak",   "start": "18:00", "end": "21:00", "price_cny_per_kwh": 1.05},
+      {"tier": "flat",   "start": "07:00", "end": "08:00", "price_cny_per_kwh": 0.72},
+      {"tier": "flat",   "start": "11:00", "end": "18:00", "price_cny_per_kwh": 0.72},
+      {"tier": "flat",   "start": "21:00", "end": "23:00", "price_cny_per_kwh": 0.72},
+      {"tier": "valley", "start": "23:00", "end": "07:00", "price_cny_per_kwh": 0.38}
+    ]
+  },
+  "restrictions": [
+    {"kind": "fumigation",     "starts_at": "2026-09-11T18:00:00+08:00", "ends_at": "2026-09-12T06:00:00+08:00", "note": "磷化氢熏蒸密闭，严禁开风机"},
+    {"kind": "rain_backflow",  "starts_at": "2026-09-11T21:30:00+08:00", "ends_at": "2026-09-12T04:00:00+08:00", "note": "短时强降水预警，低位进风口存在倒灌风险"}
+  ]
 }
